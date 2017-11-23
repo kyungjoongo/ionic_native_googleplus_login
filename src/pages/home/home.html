@@ -1,18 +1,52 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+    <!--로긴이 되었을 경우-->
+    <div *ngIf="isLoggedIn; else loginTemplate">
+        <h1>Welcome, {{displayName}}!</h1>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+        <ion-item>
+            <ion-avatar item-start>
+                <img style="width: 100px;height: 100px;" src="{{imageUrl}}">
+            </ion-avatar>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" fixed>Email</ion-label>
+            <ion-input type="email" placeholder="email" value={{email}}></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" fixed>FAMILY NAME</ion-label>
+            <ion-input type="text" placeholder="familyName" value={{familyName}}></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" fixed>GIVEN NAME</ion-label>
+            <ion-input type="text" placeholder="givenName" value={{givenName}}></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" fixed>USER ID</ion-label>
+            <ion-input type="text" placeholder="userId" value={{userId}}></ion-input>
+        </ion-item>
+
+        <p>
+            <button ion-button color="red" (click)="register()">Google+로 가입</button>
+
+        </p>
+    </div>
+
+
+    <!--로긴이 안되있을 경우-->
+    <ng-template #loginTemplate>
+        <p>
+            <button ion-button color="red" (click)="login()">Login With Google</button>
+            <button ion-button color="red" (click)="logout()">Logout From Google</button>
+        </p>
+    </ng-template>
 </ion-content>
