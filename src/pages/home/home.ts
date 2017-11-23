@@ -6,6 +6,8 @@ import {FirebaseProvider} from "../../providers/firebase/firebase";
 import {HttpProvider} from "../../providers/http/http";
 import {LocalStorageService} from 'angular-2-local-storage';
 import {ListPage} from "../list/list";
+import {MyApp} from "../../app/app.component";
+import {Events} from 'ionic-angular';
 
 @Component({
     selector: 'page-home',
@@ -28,6 +30,7 @@ export class HomePage {
     constructor(public navCtrl: NavController, private googlePlus: GooglePlus
         , public firebaseProvider: FirebaseProvider
         , private httpProvider: HttpProvider
+        , private events: Events
         , private localStorageService: LocalStorageService) {
 
 
@@ -64,13 +67,19 @@ export class HomePage {
         this.googlePlus.login({}).then(loginResponse => {
 
 
+
+
+            //디비에서 유저정보를 가지고 온다..
             this.httpProvider.getItem(loginResponse.userId).then(res => {
 
                 if (res != null) {
                     console.log('이미 가입된 아이디가 있습니다')
 
+                    //로컬 스토리지에 이미지 저장
+                    this.localStorageService.set('imageUrl', loginResponse.imageUrl);
+
                     this.navCtrl.push(ListPage)
-                }else{
+                } else {
                     this.displayName = loginResponse.displayName;
                     this.email = loginResponse.email;
                     this.familyName = loginResponse.familyName;
@@ -80,11 +89,12 @@ export class HomePage {
                     this.isLoggedIn = true;
                     console.log(this.displayName);
 
+                    this.navCtrl.push(MyApp);
+
                 }
+
+                this.events.publish('username:changed', { 'imageUrl': loginResponse.imageUrl, 'displayName': loginResponse.displayName});
             })
-
-
-
 
 
             /**
@@ -117,6 +127,8 @@ export class HomePage {
                 this.imageUrl = "";
 
                 this.isLoggedIn = false;
+
+                this.localStorageService.set('imageUrl', null);
 
                 alert('로그아웃되었어요!');
             })

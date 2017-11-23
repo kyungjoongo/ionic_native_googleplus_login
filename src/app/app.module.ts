@@ -17,6 +17,7 @@ import {FirebaseProvider} from '../providers/firebase/firebase';
 import {HttpClientModule} from "@angular/common/http";
 import {HttpProvider} from '../providers/http/http';
 import { LocalStorageModule } from 'angular-2-local-storage';
+import { Events } from 'ionic-angular';
 
 const firebaseConfig = {
     apiKey: "AIzaSyA8pHuo5qMXU0Wk9tRJxsrjsrQ1FGMrbW4",
@@ -57,7 +58,7 @@ const firebaseConfig = {
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler}, GooglePlus,
         FirebaseProvider,
-        HttpProvider
+        HttpProvider, Events
 
 
     ]
