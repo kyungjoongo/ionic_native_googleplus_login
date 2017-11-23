@@ -48,7 +48,7 @@ export class MyApp {
 
 
 
-                if (result.imageUrl == undefined){
+                if (result.imageUrl == undefined || result.imageUrl =='' ){
                     console.log("--->222"+ result.imageUrl);
 
                     this.avatar_img = 'assets/imgs/avatar_placeholder.jpg';

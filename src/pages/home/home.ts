@@ -66,9 +66,6 @@ export class HomePage {
 
         this.googlePlus.login({}).then(loginResponse => {
 
-
-
-
             //디비에서 유저정보를 가지고 온다..
             this.httpProvider.getItem(loginResponse.userId).then(res => {
 
@@ -77,7 +74,6 @@ export class HomePage {
 
                     //로컬 스토리지에 이미지 저장
                     this.localStorageService.set('imageUrl', loginResponse.imageUrl);
-
                     this.navCtrl.push(ListPage)
                 } else {
                     this.displayName = loginResponse.displayName;
@@ -88,8 +84,6 @@ export class HomePage {
                     this.imageUrl = loginResponse.imageUrl;
                     this.isLoggedIn = true;
                     console.log(this.displayName);
-
-                    this.navCtrl.push(MyApp);
 
                 }
 
@@ -129,6 +123,8 @@ export class HomePage {
                 this.isLoggedIn = false;
 
                 this.localStorageService.set('imageUrl', null);
+
+                this.events.publish('username:changed', { 'imageUrl': '', 'displayName': ''});
 
                 alert('로그아웃되었어요!');
             })
